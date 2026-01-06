@@ -1,14 +1,24 @@
 package com.shreyasi.affirmation_repeater.entity;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "affirmations")
 public class Affirmation {
 
+    // Getters and Setters
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,37 +30,34 @@ public class Affirmation {
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
+
+    @Column(nullable = false)
+    public int repeatCount = 0;
+
+
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
     // --- JPA requires a no-arg constructor ---
-    protected Affirmation() {
-    }
 
-    public Affirmation(String text) {
+
+   /* public Affirmation(String text) {
         this.text = text;
         this.createdAt = LocalDateTime.now();
-    }
-    // Getters and Setters
-    public Long getId() {
-        return id;
+    }*/
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
     }
 
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-        this.updatedAt = LocalDateTime.now();
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
     }
 }
+
+
+
+
 

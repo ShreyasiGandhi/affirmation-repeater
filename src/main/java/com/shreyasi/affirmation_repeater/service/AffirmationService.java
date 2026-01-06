@@ -21,6 +21,12 @@ public class AffirmationService {
     }
 
     public Affirmation saveAffirmation(Affirmation affirmation) {
+        if (affirmation.getCreatedAt() == null) {
+            affirmation.setCreatedAt(java.time.LocalDateTime.now());
+        }
+        if (affirmation.getRepeatCount() == 0) {
+            affirmation.setRepeatCount(0); // optional, already default
+        }
         return repository.save(affirmation);
     }
 
@@ -41,6 +47,7 @@ public class AffirmationService {
         return new AffirmationResponse(
                 affirmation.getId(),
                 affirmation.getText(),
+                affirmation.getRepeatCount(),
                 affirmation.getCreatedAt()
         );
     }
@@ -56,5 +63,18 @@ public class AffirmationService {
 
         return mapToResponse(affirmations.get(randomIndex));
     }
+
+    public AffirmationResponse repeatAffirmation(Long id) {
+
+        Affirmation affirmation = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Affirmation not found"));
+
+        affirmation.setRepeatCount(affirmation.getRepeatCount() + 1);
+
+        repository.save(affirmation);
+
+        return mapToResponse(affirmation);
+    }
+
 
 }

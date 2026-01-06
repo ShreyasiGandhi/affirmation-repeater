@@ -1,6 +1,5 @@
 package com.shreyasi.affirmation_repeater.controller;
 
-import com.shreyasi.affirmation_repeater.dto.AffirmationRequest;
 import com.shreyasi.affirmation_repeater.dto.AffirmationResponse;
 import com.shreyasi.affirmation_repeater.entity.Affirmation;
 import com.shreyasi.affirmation_repeater.service.AffirmationService;
@@ -52,6 +51,14 @@ public class AffirmationController {
     public ResponseEntity<AffirmationResponse> getRandomAffirmation() {
         return ResponseEntity.ok(service.getRandomAffirmation());
     }
+
+    @PostMapping("/{id}/repeat")
+    public ResponseEntity<AffirmationResponse> repeatAffirmation(@PathVariable Long id) {
+        AffirmationResponse updated = service.repeatAffirmation(id);
+        return ResponseEntity.ok(updated);
+
+    }
+
 
 }
 

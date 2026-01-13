@@ -21,12 +21,12 @@ public class AffirmationService {
     }
 
     public Affirmation saveAffirmation(Affirmation affirmation) {
-        if (affirmation.getCreatedAt() == null) {
-            affirmation.setCreatedAt(java.time.LocalDateTime.now());
-        }
-        if (affirmation.getRepeatCount() == 0) {
-            affirmation.setRepeatCount(0); // optional, already default
-        }
+//        if (affirmation.getCreatedAt() == null) {
+//            affirmation.setCreatedAt(java.time.LocalDateTime.now());
+//        }
+//        if (affirmation.getRepeatCount() == 0) {
+//            affirmation.setRepeatCount(0); // optional, already default
+//        }
         return repository.save(affirmation);
     }
 
